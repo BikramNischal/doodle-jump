@@ -1,13 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Doodle Jump</title>
+    <link rel="stylesheet" href="./styles/style.css">
+	</head>
+	<body>
+
+		<div class="game-container">
+
+			<canvas class="canvas"> </canvas>
+   
+      <!-- Game main menu -->
+			<div class="main-menu menu">
+				<h1 class="game-title">Doodle Jump</h1>
+
+        <button class="btn btn--start">Play</button>
+
+				<p class="info">
+					use
+					<span class="key left">←</span>
+					<span class="key right">→</span>
+					to move and space to (re) start...
+				</p>
+			</div>
+
+      <!-- Restart menu on game over -->
+			<div class="restart-menu menu">
+				<h1>game over!</h1>
+				<h3 id="go_score">you scored 0 points</h3>
+				<button class="btn btn--restart" href="#">Restart</button>
+			</div>
+		</div>
+
+		<script type="module" src="/src/main.ts"></script>
+	</body>
 </html>
