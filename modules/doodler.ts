@@ -1,4 +1,11 @@
-import { canvas, ctx } from "./canvas.ts";
+import { ctx } from "./canvas.ts";
+import {
+	DOODLER_HEIGHT,
+	DOODLER_WIDTH,
+	CANVAS_WIDTH,
+	CANVAS_HEIGHT,
+} from "../utils/constants.js";
+import Platform from "./platform.ts";
 
 export default class Doodler {
 	x: number;
@@ -16,13 +23,13 @@ export default class Doodler {
 
 	constructor(imgSrc: string) {
 		// doodle postion and size
-		this.x = canvas.width / 2;
-		this.y = canvas.height / 2;
-		this.h = 50;
-		this.w = 50;
+		this.x = CANVAS_WIDTH / 2;
+		this.y = CANVAS_HEIGHT / 2;
+		this.h = DOODLER_HEIGHT;
+		this.w = DOODLER_WIDTH;
 
 		// doodle movement values
-		this.dx = 5;
+		this.dx = 8;
 		this.dy = 0;
 		this.gravity = 0.1;
 		this.jumpHeight = -4;
@@ -37,50 +44,61 @@ export default class Doodler {
 		this.loaded = false;
 		this.img.onload = () => {
 			this.loaded = true;
-			this.drawDoodler();
+			this.draw();
 		};
 	}
 
-	drawDoodler() {
+	draw() {
 		if (this.loaded)
 			ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
 	}
 
 	updateImage(imgsrc: string) {
 		this.img.src = imgsrc;
-		this.drawDoodler();
+		this.draw();
 	}
 
 	fall() {
 		this.dy += this.gravity;
 		this.y += this.dy;
-
-        // Prevent the doodler from falling off the canvas
-        if (this.y + this.h > canvas.height) {
-            this.y = canvas.height - this.h;
-            this.dy = 0;
-        }
 	}
 
 	jump() {
 		this.dy = this.jumpHeight;
 	}
 
-    //updates x position of doodler
+	//check collition with platform
+	onPlatform(platform: Platform) {
+		if (
+			this.y + this.h >= platform.y &&
+			this.y + this.h <= platform.y + platform.h
+		) {
+			let minX = platform.x - this.w;
+			let maxX = platform.x + platform.w;
+
+			if (this.x >= minX && this.x <= maxX) {
+				this.jump();
+			}
+		}
+	}
+
+	//updates x position of doodler
 	update() {
 		if (this.moveingLeft) {
-            // updates image to left facing
-            this.updateImage("./doodler-left.png");
+			// updates image to left facing
+			this.updateImage("./doodler-left.png");
 			this.x -= this.dx;
 		} else if (this.moveingRight) {
-            //updates image to  right facing
-            this.updateImage("./doodler-right.png");
+			//updates image to  right facing
+			this.updateImage("./doodler-right.png");
 			this.x += this.dx;
 		}
 
-        if(this.x + this.w < 0) this.x = canvas.width;
-        if(this.x > canvas.width) this.x = 0;
+		if (this.x + this.w < 0) this.x = CANVAS_WIDTH;
+		if (this.x > CANVAS_WIDTH) this.x = 0;
 
-        this.fall();
+        if(this.y < CANVAS_HEIGHT / 2) this.y = CANVAS_HEIGHT/2;
+
+		this.fall();
 	}
 }
