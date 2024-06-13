@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/constants.ts";
+import { CANVAS_HEIGHT, CANVAS_WIDTH} from "../utils/constants.ts";
 import { ctx } from "../modules/canvas.ts";
 import Doodler from "../modules/doodler.ts";
 import { generatePlateforms } from "../modules/platform.ts";
@@ -32,10 +32,11 @@ function resetGame(){
 function Game() {
     if(gameover) return;
 	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    let platformDy = doodler.dy * -1;
 
 	//draw platforms on canvas
 	platforms.forEach((platform) => {        
-        const tempPlatformHeight = platform.y - doodler.dy;
+        const tempPlatformHeight = platform.y + platformDy;
         if(tempPlatformHeight > platform.y){
             platform.y = tempPlatformHeight;
         }
@@ -43,6 +44,7 @@ function Game() {
 		platform.update();
 		platform.draw();
 		doodler.onPlatform(platform);
+
 	});
 
 	//draw doodle on canvas

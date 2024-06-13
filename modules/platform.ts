@@ -7,14 +7,13 @@ import {
     TOTAL_PLATFORM,
 } from "../utils/constants.ts";
 import { ctx } from "./canvas";
-import random from "../utils/random.ts";
+import random  from "../utils/random.ts";
 
 export default class Platform {
 	x: number;
 	y: number;
 	h: number;
 	w: number;
-    dy: number;
 	img: HTMLImageElement;
 	// TODO type for power ups
 
@@ -23,7 +22,6 @@ export default class Platform {
 		this.y = posY;
 		this.w = PLATFORM_WIDTH;
 		this.h = PLATFORM_HEIGHT;
-        this.dy = 5;
 		this.img = new Image();
 		this.img.src = "./platform.png";
 	}
@@ -34,12 +32,14 @@ export default class Platform {
 
     update(){
         if(this.y > CANVAS_HEIGHT){
-            this.y = 0 + PLATFORM_GAP;
+            this.y = 0;
             this.x = random(CANVAS_WIDTH - this.w);
         }
     }
+
 }
 
+// genereate 
 function generatePlateforms() {
 	const platforms = [];
 
@@ -47,7 +47,7 @@ function generatePlateforms() {
 		platforms.push(
 			new Platform(
 				random(CANVAS_WIDTH - PLATFORM_WIDTH),
-				CANVAS_HEIGHT - i * PLATFORM_GAP
+				CANVAS_HEIGHT - ((i+1) * PLATFORM_GAP)
 			)
 		);
 	}

@@ -97,7 +97,7 @@ export default class Doodler {
 		if (this.x + this.w < 0) this.x = CANVAS_WIDTH;
 		if (this.x > CANVAS_WIDTH) this.x = 0;
 
-        if(this.y < CANVAS_HEIGHT / 2) this.y = CANVAS_HEIGHT/2;
+        if(this.y < CANVAS_HEIGHT/2) this.y = CANVAS_HEIGHT/2;
 
 		this.fall();
 	}
