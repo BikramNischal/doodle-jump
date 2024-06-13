@@ -32,9 +32,13 @@ function resetGame(){
 function Game() {
     if(gameover) return;
 	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
 	//draw platforms on canvas
-	platforms.forEach((platform) => {
-		platform.y -= doodler.dy * 3;
+	platforms.forEach((platform) => {        
+        const tempPlatformHeight = platform.y - doodler.dy;
+        if(tempPlatformHeight > platform.y){
+            platform.y = tempPlatformHeight;
+        }
 		if (platform.y > CANVAS_HEIGHT) score++;
 		platform.update();
 		platform.draw();

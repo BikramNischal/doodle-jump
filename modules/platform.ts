@@ -29,13 +29,10 @@ export default class Platform {
 	}
 
 	draw() {
-		// ctx.fillStyle = "#09b883";
-		// ctx.fillRect(this.x, this.y, this.w, this.h);
 		ctx.drawImage(this.img, this.x, this.y,this.w,this.h);
 	}
 
     update(){
-        // this.y += this.dy;
         if(this.y > CANVAS_HEIGHT){
             this.y = 0 + PLATFORM_GAP;
             this.x = random(CANVAS_WIDTH - this.w);
