@@ -15,7 +15,6 @@ export default class Platform {
 	h: number;
 	w: number;
 	img: HTMLImageElement;
-	// TODO type for power ups
 
 	constructor(posX: number, posY: number) {
 		this.x = posX;
@@ -30,6 +29,7 @@ export default class Platform {
 		ctx.drawImage(this.img, this.x, this.y,this.w,this.h);
 	}
 
+	// place platform at top after it goes out of canvas
     update(){
         if(this.y > CANVAS_HEIGHT){
             this.y = 0;
@@ -39,7 +39,7 @@ export default class Platform {
 
 }
 
-// genereate 
+// genereate TOTAL_TLATFORM number of platform 
 function generatePlateforms() {
 	const platforms = [];
 

@@ -10,18 +10,24 @@ const mainMenu = document.querySelector(".main-menu") as HTMLDivElement;
 const restartMenu = document.querySelector(".restart-menu") as HTMLDivElement;
 const yourscore = document.querySelector(".score") as HTMLHeadingElement;
 
+//initialize doodle and get platforms 
 let doodler = new Doodler("./doodler-right.png");
 let platforms = generatePlateforms();
 
+
+//game score and gameflag
 let score = 0;
 let gameover = false;
 
+//game score set up 
 function displayScore() {
 	ctx.fillStyle = "black";
-	ctx.font = "32px Arial";
+	ctx.font = "32px Gloria Hallelujah";
 	ctx.fillText("Score: " + score, 20, 50);
 }
 
+
+// reset game datas
 function resetGame(){
     doodler = new Doodler("./doodler-right.png");
     platforms = generatePlateforms();
@@ -29,6 +35,8 @@ function resetGame(){
     gameover= false;
 }
 
+
+//main game function
 function Game() {
     if(gameover) return;
 	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -43,6 +51,8 @@ function Game() {
 		if (platform.y > CANVAS_HEIGHT) score++;
 		platform.update();
 		platform.draw();
+
+        //checks platform collision 
 		doodler.onPlatform(platform);
 
 	});
@@ -62,18 +72,23 @@ function Game() {
 }
 
 
+// game loop for game windows management
 function gameloop(){
+    
+    //display and start game window on start button event
     startBtn.onclick = () => {
         mainMenu.style.display = "none";
         Game();
     };
 
+    //display and restart game on restart button event
     restartBtn.onclick = () =>{
         restartMenu.style.display = "none";
         resetGame();
         Game();
     }
 
+    //display end game screen
     if(gameover){
         restartMenu.style.display = "flex" ;
         yourscore.innerHTML = `Score ${score} points`;

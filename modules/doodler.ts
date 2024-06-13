@@ -58,6 +58,7 @@ export default class Doodler {
 		this.draw();
 	}
 
+	// drag doodler down over time with gravity
 	fall() {
 		this.dy += this.gravity;
 		this.y += this.dy;
@@ -67,7 +68,8 @@ export default class Doodler {
 		this.dy = this.jumpHeight;
 	}
 
-	//check collition with platform
+	//check collision with platform
+	//on collision jump 
 	onPlatform(platform: Platform) {
 		if (
 			this.y + this.h >= platform.y &&
@@ -94,9 +96,11 @@ export default class Doodler {
 			this.x += this.dx;
 		}
 
+		// wrap doodler if it goes out of the screen
 		if (this.x + this.w < 0) this.x = CANVAS_WIDTH;
 		if (this.x > CANVAS_WIDTH) this.x = 0;
 
+		//place doodler at the center of y-axis if it goes above center
         if(this.y < CANVAS_HEIGHT/2) this.y = CANVAS_HEIGHT/2;
 
 		this.fall();
